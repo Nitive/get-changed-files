@@ -64,6 +64,18 @@ interface Log {
   debug: (data: any) => void
 }
 
+function isEmptyArray(value: unknown) {
+  if (!Array.isArray(value)) {
+    return false
+  }
+
+  if ((value as any[]).length === 0) {
+    return true
+  }
+
+  return false
+}
+
 export async function getChangedFiles({
   gh,
   inputs,
@@ -89,6 +101,7 @@ export async function getChangedFiles({
   if (isFirstPushOfBranch) {
     return {
       files: [],
+      empty: true,
     }
   }
 
@@ -151,8 +164,10 @@ export async function getChangedFiles({
   ).filter(Boolean)
 
   log.info({ matchedChangedExistingDirectories })
+  const files = [...matchingFiles, ...matchedChangedExistingDirectories]
 
   return {
-    files: [...matchingFiles, ...matchedChangedExistingDirectories],
+    files,
+    empty: isEmptyArray(files),
   }
 }
