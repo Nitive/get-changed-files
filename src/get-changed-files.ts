@@ -66,13 +66,12 @@ interface Log {
 
 function isEmptyArray(value: unknown) {
   if (!Array.isArray(value)) {
-    return false
+    throw new Error("Is not an array")
   }
 
   if ((value as any[]).length === 0) {
     return true
   }
-
   return false
 }
 
