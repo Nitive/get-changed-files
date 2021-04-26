@@ -64,17 +64,6 @@ interface Log {
   debug: (data: any) => void
 }
 
-function isEmptyArray(value: unknown) {
-  if (!Array.isArray(value)) {
-    throw new Error("Is not an array")
-  }
-
-  if ((value as any[]).length === 0) {
-    return true
-  }
-  return false
-}
-
 export async function getChangedFiles({
   gh,
   inputs,
@@ -167,6 +156,6 @@ export async function getChangedFiles({
 
   return {
     files,
-    empty: isEmptyArray(files),
+    empty: files.length === 0,
   }
 }
