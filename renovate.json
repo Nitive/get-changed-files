@@ -1,7 +1,7 @@
 {
   "extends": [
     "config:base",
-    ":autodetectPinVersions",
+    ":preserveSemverRanges",
     "group:allNonMajor",
     "schedule:daily"
   ]
