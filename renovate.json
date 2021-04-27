@@ -4,5 +4,9 @@
     ":preserveSemverRanges",
     "group:allNonMajor",
     "schedule:daily"
-  ]
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "extends": ["schedule:daily"]
+  }
 }
