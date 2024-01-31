@@ -33,7 +33,7 @@ async function run(): Promise<void> {
     core.setOutput("files", result.files)
     core.setOutput("empty", result.empty)
   } catch (error) {
-    core.setFailed(error.message)
+    core.setFailed((error as { message?: string })?.message ?? "unknown error")
   }
 }
 

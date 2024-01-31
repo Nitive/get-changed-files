@@ -4,6 +4,6 @@
     "module": "commonjs",
     "strict": true,
     "noImplicitAny": true,
-    "esModuleInterop": true
-  }
+    "esModuleInterop": true,
+  },
 }

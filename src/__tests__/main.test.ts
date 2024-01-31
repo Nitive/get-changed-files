@@ -27,12 +27,12 @@ class GitHub implements GitHubAPI {
 
   async getChangedFiles(opts: GetChangedFilesOptions) {
     const data = this.opts.getChangedFilesData.find(
-      (d) => d.eventType === opts.eventType && d.ref === opts.ref
+      (d) => d.eventType === opts.eventType && d.ref === opts.ref,
     )
 
     if (!data) {
       return Promise.reject(
-        new Error(`Not found. opts: ${JSON.stringify(opts)}`)
+        new Error(`Not found. opts: ${JSON.stringify(opts)}`),
       )
     }
 

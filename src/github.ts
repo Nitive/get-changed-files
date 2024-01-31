@@ -33,13 +33,13 @@ export interface GitHubAPI {
 
 function createAPIMethod<Opts, Response>(
   name: string,
-  fn: (opts: Opts) => Promise<Response>
+  fn: (opts: Opts) => Promise<Response>,
 ): (opts: Opts) => Promise<Response> {
   return async (opts: Opts) => {
     try {
       return await fn(opts)
     } catch (err) {
-      core.debug(JSON.stringify({ name, opts, err: err.toString() }))
+      core.debug(JSON.stringify({ name, opts, err: err?.toString() }))
       return Promise.reject(err)
     }
   }
@@ -51,11 +51,11 @@ export class GitHub implements GitHubAPI {
     this.octokit = github.getOctokit(token)
     this.isDirectoryExist = createAPIMethod(
       "isDirectoryExist",
-      this.isDirectoryExist.bind(this)
+      this.isDirectoryExist.bind(this),
     )
     this.getChangedFiles = createAPIMethod(
       "getChangedFiles",
-      this.getChangedFiles.bind(this)
+      this.getChangedFiles.bind(this),
     )
   }
 
@@ -69,7 +69,7 @@ export class GitHub implements GitHubAPI {
           owner: opts.owner,
           repo: opts.repo,
           pull_number: Number(opts.ref),
-        }
+        },
       )) {
         changedFiles.push(...response.data)
       }
@@ -82,7 +82,7 @@ export class GitHub implements GitHubAPI {
           owner: opts.owner,
           repo: opts.repo,
           ref: opts.ref,
-        }
+        },
       )) {
         changedFiles.push(...(response.data.files || []))
       }
@@ -101,7 +101,7 @@ export class GitHub implements GitHubAPI {
       })
       return true
     } catch (err) {
-      if (err && err.status === 404) {
+      if (err && (err as { status: number })?.status === 404) {
         return false
       }
 

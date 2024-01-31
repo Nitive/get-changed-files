@@ -1,4 +1,4 @@
-import minimatch from "minimatch"
+import { minimatch } from "minimatch"
 import { GitHubAPI } from "./github"
 import { getChangedDirectories } from "./get-changed-directories"
 
@@ -21,7 +21,7 @@ interface GitHubPullRequestEvent {
 }
 
 function isGitHubPullRequestEvent(
-  event: GitHubEvent
+  event: GitHubEvent,
 ): event is GitHubPullRequestEvent {
   return !!(event as any).pull_request
 }
@@ -137,7 +137,7 @@ export async function getChangedFiles({
   const matchingFiles = existingFiles.filter((fileName) =>
     filesGlobs
       .filter((glob) => !glob.endsWith("/"))
-      .some((glob) => minimatch(fileName, glob))
+      .some((glob) => minimatch(fileName, glob)),
   )
   log.debug({ matchingFiles })
 
@@ -148,7 +148,7 @@ export async function getChangedFiles({
   const matchedChangedDirectories = changedDirectories.filter((fileName) =>
     filesGlobs
       .filter((glob) => glob.endsWith("/"))
-      .some((glob) => minimatch(fileName.dirname, glob))
+      .some((glob) => minimatch(fileName.dirname, glob)),
   )
 
   log.debug({ matchedChangedDirectories })
@@ -166,7 +166,7 @@ export async function getChangedFiles({
           }))
 
         return exists ? dir.dirname : undefined
-      })
+      }),
     )
   ).filter(Boolean)
 
