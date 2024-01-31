@@ -15,11 +15,11 @@ jobs:
       files: ${{ steps.produce-matrix.outputs.files }}
       empty: ${{ steps.produce-matrix.outputs.empty }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Produce packages matrix from folder structure
         id: produce-matrix
-        uses: Nitive/get-changed-files@v1
+        uses: Nitive/get-changed-files@v2
         with:
           files: |
             packages/*/
@@ -32,7 +32,7 @@ jobs:
       matrix:
         package: ${{ fromJson(needs.produce-packages-matrix.outputs.files) }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Lint package
         id: working-directory

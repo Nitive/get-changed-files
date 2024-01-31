@@ -20,5 +20,5 @@ outputs:
     description: >
       Set to true if no modified files or folders were found
 runs:
-  using: "node16"
+  using: "node20"
   main: "dist/index.js"
